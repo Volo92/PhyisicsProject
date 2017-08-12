@@ -7,7 +7,7 @@ public class Roller : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.CompareTag("Goal"))
+        if (collision.gameObject.CompareTag("HardGoal"))
         {
             collision.gameObject.GetComponent<Rigidbody>().isKinematic = false;
         }

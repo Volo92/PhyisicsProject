@@ -43,12 +43,22 @@ public class Logic : MonoBehaviour {
             {
                 score++;
                 Debug.Log(score);
-                if (score >= 7)
+                if (score >= 15)
                 {
                     Application.LoadLevel("Level_3");
                 }
             }
         }
-    }
+
+        if (other.gameObject.CompareTag("HardGoal"))
+        {
+            score++;
+            Debug.Log(score);
+            if (score >= 3)
+            {
+                Application.LoadLevel("Level_1");
+            }
+        }
+    }    
 
 }

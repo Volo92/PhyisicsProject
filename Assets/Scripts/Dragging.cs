@@ -7,12 +7,57 @@ public class Dragging : MonoBehaviour {
     private Vector3 screenPoint;
     private Vector3 offset;
     private bool onClick;
+    [SerializeField]
+    private GameObject Ball;
+    [SerializeField]
+    private GameObject SoftBall;
+    [SerializeField]
+    private GameObject HardBall;
 
     private void Start()
     {
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<SpringJoint>().connectedBody = GameObject.FindGameObjectWithTag("Joint").GetComponent<Rigidbody>();
 
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (gameObject.Equals(Ball))
+            {
+                Destroy(gameObject);
+                Instantiate(SoftBall);
+            } else if (gameObject.Equals(SoftBall))
+            {
+                Destroy(gameObject);
+                Instantiate(HardBall);
+            } else
+            {
+                Destroy(gameObject);
+                Instantiate(Ball);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if (gameObject.Equals(Ball))
+            {
+                Destroy(gameObject);
+                Instantiate(HardBall);
+            }
+            else if (gameObject.Equals(SoftBall))
+            {
+                Destroy(gameObject);
+                Instantiate(Ball);
+            }
+            else
+            {
+                Destroy(gameObject);
+                Instantiate(SoftBall);
+            }
+        }
     }
 
     private void OnMouseDown()
@@ -34,7 +79,14 @@ public class Dragging : MonoBehaviour {
     {
         GetComponent<SpringJoint>().connectedAnchor = new Vector3(GetComponent<SpringJoint>().connectedAnchor.x, GetComponent<SpringJoint>().connectedAnchor.y + (9 - Camera.main.WorldToScreenPoint(transform.position).z)/1.5f, GetComponent<SpringJoint>().connectedAnchor.z);
         GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<SpringJoint>().spring = 400f;
+        if (transform.localScale.x == 0.5)
+        {
+            GetComponent<SpringJoint>().spring = 1400f;
+        }
+        else
+        {
+            GetComponent<SpringJoint>().spring = 1800f;
+        }        
         StartCoroutine("RespawnBall");
     }
 
