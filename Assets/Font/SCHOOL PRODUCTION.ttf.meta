@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 83aa305adddd5f348b8f306c674fc2ea
+timeCreated: 1503305483
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: SCHOOL PRODUCTION
+  fontNames:
+  - SCHOOL PRODUCTION
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
