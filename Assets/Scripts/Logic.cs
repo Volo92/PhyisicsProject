@@ -30,13 +30,11 @@ public class Logic : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -69,6 +67,7 @@ public class Logic : MonoBehaviour {
         if (other.gameObject.CompareTag("HardGoal"))
         {
             score++;
+            other.gameObject.tag = "Untagged";
             scoreText.text = score.ToString() + " / 3";
             Debug.Log(score);
             if (score >= 3)

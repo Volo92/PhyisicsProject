@@ -14,11 +14,23 @@ public class Dragging : MonoBehaviour {
     [SerializeField]
     private GameObject HardBall;
 
+    private void Awake()
+    {
+        SoftBall.GetComponent<MeshRenderer>().enabled = false;
+        SoftBall.GetComponent<Dragging>().enabled = false;
+        SoftBall.GetComponent<SphereCollider>().enabled = false;
+        HardBall.GetComponent<MeshRenderer>().enabled = false;
+        HardBall.GetComponent<Dragging>().enabled = false;
+        HardBall.GetComponent<SphereCollider>().enabled = false;
+    }
+
     private void Start()
     {
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<SpringJoint>().connectedBody = GameObject.FindGameObjectWithTag("Joint").GetComponent<Rigidbody>();
-
+        Ball = GameObject.FindGameObjectWithTag("Ball");
+        SoftBall = GameObject.FindGameObjectWithTag("SoftBall");
+        HardBall = GameObject.FindGameObjectWithTag("HardBall");
     }
 
     private void Update()
@@ -27,16 +39,28 @@ public class Dragging : MonoBehaviour {
         {
             if (gameObject.Equals(Ball))
             {
-                Destroy(gameObject);
-                Instantiate(SoftBall);
+                gameObject.GetComponent<MeshRenderer>().enabled = false;
+                gameObject.GetComponent<Dragging>().enabled = false;
+                gameObject.GetComponent<SphereCollider>().enabled = false;
+                SoftBall.GetComponent<MeshRenderer>().enabled = true;
+                SoftBall.GetComponent<Dragging>().enabled = true;
+                SoftBall.GetComponent<SphereCollider>().enabled = true;
             } else if (gameObject.Equals(SoftBall))
             {
-                Destroy(gameObject);
-                Instantiate(HardBall);
+                gameObject.GetComponent<MeshRenderer>().enabled = false;
+                gameObject.GetComponent<Dragging>().enabled = false;
+                gameObject.GetComponent<SphereCollider>().enabled = false;
+                HardBall.GetComponent<MeshRenderer>().enabled = true;
+                HardBall.GetComponent<Dragging>().enabled = true;
+                HardBall.GetComponent<SphereCollider>().enabled = true;
             } else
             {
-                Destroy(gameObject);
-                Instantiate(Ball);
+                gameObject.GetComponent<MeshRenderer>().enabled = false;
+                gameObject.GetComponent<Dragging>().enabled = false;
+                gameObject.GetComponent<SphereCollider>().enabled = false;
+                Ball.GetComponent<MeshRenderer>().enabled = true;
+                Ball.GetComponent<Dragging>().enabled = true;
+                Ball.GetComponent<SphereCollider>().enabled = true;
             }
         }
 
@@ -44,18 +68,30 @@ public class Dragging : MonoBehaviour {
         {
             if (gameObject.Equals(Ball))
             {
-                Destroy(gameObject);
-                Instantiate(HardBall);
+                gameObject.GetComponent<MeshRenderer>().enabled = false;
+                gameObject.GetComponent<Dragging>().enabled = false;
+                gameObject.GetComponent<SphereCollider>().enabled = false;
+                HardBall.GetComponent<MeshRenderer>().enabled = true;
+                HardBall.GetComponent<Dragging>().enabled = true;
+                HardBall.GetComponent<SphereCollider>().enabled = true;
             }
             else if (gameObject.Equals(SoftBall))
             {
-                Destroy(gameObject);
-                Instantiate(Ball);
+                gameObject.GetComponent<MeshRenderer>().enabled = false;
+                gameObject.GetComponent<Dragging>().enabled = false;
+                gameObject.GetComponent<SphereCollider>().enabled = false;
+                Ball.GetComponent<MeshRenderer>().enabled = true;
+                Ball.GetComponent<Dragging>().enabled = true;
+                Ball.GetComponent<SphereCollider>().enabled = true;
             }
             else
             {
-                Destroy(gameObject);
-                Instantiate(SoftBall);
+                gameObject.GetComponent<MeshRenderer>().enabled = false;
+                gameObject.GetComponent<Dragging>().enabled = false;
+                gameObject.GetComponent<SphereCollider>().enabled = false;
+                SoftBall.GetComponent<MeshRenderer>().enabled = true;
+                SoftBall.GetComponent<Dragging>().enabled = true;
+                SoftBall.GetComponent<SphereCollider>().enabled = true;
             }
         }
     }
@@ -79,14 +115,17 @@ public class Dragging : MonoBehaviour {
     {
         GetComponent<SpringJoint>().connectedAnchor = new Vector3(GetComponent<SpringJoint>().connectedAnchor.x, GetComponent<SpringJoint>().connectedAnchor.y + (9 - Camera.main.WorldToScreenPoint(transform.position).z)/1.5f, GetComponent<SpringJoint>().connectedAnchor.z);
         GetComponent<Rigidbody>().isKinematic = false;
-        if (transform.localScale.x == 0.5)
+        if (gameObject.Equals(SoftBall))
         {
             GetComponent<SpringJoint>().spring = 1400f;
         }
-        else
+        else if (gameObject.Equals(HardBall))
         {
-            GetComponent<SpringJoint>().spring = 1800f;
-        }        
+            GetComponent<SpringJoint>().spring = 13000f;
+        } else
+        {
+            GetComponent<SpringJoint>().spring = 2000f;
+        }
         StartCoroutine("RespawnBall");
     }
 
@@ -105,7 +144,18 @@ public class Dragging : MonoBehaviour {
         GetComponent<SpringJoint>().maxDistance = 0f;
         GetComponent<SpringJoint>().tolerance = 0.025f;
         GetComponent<SpringJoint>().breakForce = 500f;
-        transform.position = new Vector3(0f, 0f, -1f);
+        if (gameObject.Equals(SoftBall))
+        {
+            transform.position = new Vector3(0f, -0.3f, -1f);
+        }
+        else if (gameObject.Equals(HardBall))
+        {
+            transform.position = new Vector3(0f, 0.3f, -1f);
+        }
+        else
+        {
+            transform.position = new Vector3(0f, 0f, -1f);
+        }
     }
 
 }
